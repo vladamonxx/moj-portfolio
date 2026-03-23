@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>vladimir.aep | Video Editing Services</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        :root {
+            --bg: #050505;
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --accent-primary: #8b5cf6; /* After Effects Purple */
+            --accent-secondary: #ec4899; /* Premiere Pink */
+            --text-main: #ffffff;
+            --text-dim: #94a3b8;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text-main);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* --- SCROLL PROGRESS BAR --- */
+        .progress-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: transparent;
+            z-index: 2000;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+            width: 0%;
+            transition: width 0.1s ease;
+            box-shadow: 0 0 10px var(--accent-primary);
+        }
+
+        /* --- ANIMIRANA POZADINA --- */
+        .glow-bg {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -2;
+            background: radial-gradient(circle at 50% 50%, #1a1a2e 0%, #050505 100%);
+        }
+
+        .orb {
+            position: absolute;
+            width: 400px; height: 400px;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.2;
+            animation: move 20s infinite alternate;
+        }
+        .orb-1 { background: var(--accent-primary); top: -100px; left: -100px; }
+        .orb-2 { background: var(--accent-secondary); bottom: -100px; right: -100px; animation-delay: -5s; }
+
+        @keyframes move {
+            from { transform: translate(0, 0); }
+            to { transform: translate(100px, 100px); }
+        }
+
+        /* --- FLOATING ICONS BACKGROUND --- */
+        .floating-icon {
+            position: fixed;
+            opacity: 0.08;
+            font-size: 5rem;
+            pointer-events: none;
+            z-index: -1;
+            animation: float-icon 10s infinite linear alternate;
+        }
+
+        @keyframes float-icon {
+            from { transform: translateY(0) rotate(0deg); }
+            to { transform: translateY(-40px) rotate(15deg); }
+        }
+
+        /* --- NAVIGACIJA --- */
+        nav {
+            position: fixed;
+            top: 0; width: 100%;
+            padding: 25px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .logo { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1.5rem; letter-spacing: -1px; }
+        .logo span { color: var(--accent-primary); }
+
+        .lang-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: white;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-left: 15px;
+            backdrop-filter: blur(5px);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .lang-btn img {
+            border-radius: 3px;
+            width: 20px;
+            height: 15px;
+            object-fit: cover;
+        }
+        .lang-btn:hover {
+            background: var(--accent-primary);
+            border-color: var(--accent-primary);
+            transform: scale(1.05);
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+        }
+        .nav-links a {
+            color: white; 
+            text-decoration: none; 
+            margin-left: 20px; 
+            font-weight: 500;
+            transition: 0.3s;
+        }
+        .nav-links a:hover {
+            color: var(--accent-primary);
+        }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+        }
+
+        /* --- HERO SEKCIJA --- */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 10%;
+        }
+
+        .hero h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(3rem, 8vw, 6rem);
+            line-height: 0.9;
+            margin-bottom: 20px;
+        }
+
+        .gradient-text {
+            background: linear-gradient(90deg, #fff, var(--accent-primary), var(--accent-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-size: 200% auto;
+            animation: textShine 4s linear infinite;
+        }
+
+        @keyframes textShine { to { background-position: 200% center; } }
+
+        .btn {
+            padding: 15px 35px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: 0.3s;
+            display: inline-block;
+            margin-top: 30px;
+        }
+        .btn-primary {
+            background: var(--accent-primary);
+            color: white;
+            box-shadow: 0 10px 20px rgba(139, 92, 246, 0.3);
+            border: none;
+            cursor: pointer;
+        }
+        .btn-primary:hover { transform: scale(1.05); background: #7c3aed; }
+
+        /* --- SERVICES (KARTICE) --- */
+        .section { padding: 100px 10%; }
+        .section-title { font-family: 'Space Grotesk', sans-serif; font-size: 3rem; margin-bottom: 50px; text-align: center; }
+        .section-title span { color: var(--accent-primary); }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .glass-card {
+            background: var(--card-bg);
+            border: 1px solid rgba(255,255,255,0.05);
+            padding: 40px;
+            border-radius: 24px;
+            backdrop-filter: blur(20px);
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .glass-card:hover {
+            border-color: var(--accent-primary);
+            transform: translateY(-10px);
+            background: rgba(255,255,255,0.05);
+        }
+
+        .icon-box {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: var(--accent-primary);
+        }
+
+        /* --- PRICING --- */
+        .price { font-size: 2.5rem; font-weight: 800; margin: 20px 0; color: #fff; }
+        .price span { font-size: 1rem; color: var(--text-dim); }
+
+        /* REVEAL ANIMATION */
+        .reveal { opacity: 0; transform: translateY(30px); transition: 1s ease-out; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        /* --- MODAL (POPUP ZA KONTAKT) --- */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(8px);
+            display: flex; justify-content: center; align-items: center;
+            z-index: 3000; opacity: 0; pointer-events: none; transition: 0.3s ease;
+        }
+        .modal-overlay.active { opacity: 1; pointer-events: all; }
+        .modal-box {
+            background: rgba(20, 20, 20, 0.8); border: 1px solid rgba(255,255,255,0.1);
+            padding: 40px; border-radius: 24px; text-align: center;
+            transform: scale(0.8); transition: 0.3s ease; position: relative;
+            max-width: 90%; width: 400px; box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+        }
+        .modal-overlay.active .modal-box { transform: scale(1); }
+        .close-modal {
+            position: absolute; top: 15px; right: 20px; background: none; border: none;
+            color: white; font-size: 1.5rem; cursor: pointer; opacity: 0.5; transition: 0.3s;
+        }
+        .close-modal:hover { opacity: 1; color: var(--accent-secondary); }
+        .contact-btn {
+            display: flex; flex-direction: column; align-items: center; gap: 10px;
+            padding: 20px; border-radius: 16px; text-decoration: none; color: white;
+            margin-top: 20px; border: 1px solid rgba(255,255,255,0.05); transition: 0.3s;
+            background: rgba(255,255,255,0.02);
+        }
+        .contact-btn i { font-size: 2.5rem; }
+        .contact-btn span { font-weight: 600; font-size: 1.1rem; }
+        .contact-btn small { color: var(--text-dim); font-size: 0.85rem; }
+        .email-btn:hover { background: rgba(139, 92, 246, 0.1); border-color: var(--accent-primary); transform: translateY(-5px); }
+        .email-btn i { color: var(--accent-primary); }
+        .insta-btn:hover { background: rgba(236, 72, 153, 0.1); border-color: var(--accent-secondary); transform: translateY(-5px); }
+        .insta-btn i { color: var(--accent-secondary); }
+
+    </style>
+</head>
+<body>
+
+    <!-- Scroll Progress Bar -->
+    <div class="progress-container">
+        <div class="progress-bar" id="myBar"></div>
+    </div>
+
+    <!-- Background Orbs -->
+    <div class="glow-bg">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+    </div>
+
+    <!-- Fixed Floating Icons -->
+    <i class="fa-solid fa-film floating-icon" style="top: 20%; left: 8%; animation-delay: 1s;"></i>
+    <i class="fa-solid fa-clapperboard floating-icon" style="top: 60%; right: 5%; animation-delay: 3s;"></i>
+    <i class="fa-solid fa-scissors floating-icon" style="bottom: 15%; left: 15%; animation-delay: 5s;"></i>
+
+    <nav>
+        <div style="display: flex; align-items: center;">
+            <div class="logo">vladimir<span>.aep</span></div>
+            <button id="langToggle" class="lang-btn">
+                <img id="langIcon" src="https://flagcdn.com/w40/us.png" alt="English">
+                <span id="langText">EN</span>
+            </button>
+        </div>
+        <div class="nav-links">
+            <a href="#services" data-i18n="navServices">Usluge</a>
+            <a href="#portfolio" data-i18n="navPortfolio">Portfolio</a>
+            <a href="#pricing" data-i18n="navPricing">Cenovnik</a>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <h1 class="reveal" data-i18n="heroTitle">Vaša vizija u <br><span class="gradient-text">punom pokretu</span></h1>
+        <p class="reveal" style="max-width: 600px; color: var(--text-dim); font-size: 1.2rem;" data-i18n="heroDesc">
+            Profesionalna video montaža za YouTube, Instagram Reels i komercijalne projekte. Pretvaramo sirove snimke u digitalnu umetnost.
+        </p>
+        <div class="reveal">
+            <button onclick="openContactModal()" class="btn btn-primary" data-i18n="heroBtn">Započni Projekat</button>
+        </div>
+    </section>
+
+    <section id="services" class="section">
+        <h2 class="section-title reveal" data-i18n="servicesTitle">Šta radim <span>?</span></h2>
+        <div class="grid">
+            <div class="glass-card reveal">
+                <div class="icon-box"><i class="fa-brands fa-youtube"></i></div>
+                <h3 data-i18n="ytTitle">YouTube Editing</h3>
+                <p style="color: var(--text-dim); margin-top: 10px;" data-i18n="ytDesc">Dinamičan "retention" stil, zvučni efekti i color grading koji zadržavaju gledaoce.</p>
+            </div>
+            <div class="glass-card reveal" style="transition-delay: 0.1s;">
+                <div class="icon-box"><i class="fa-solid fa-mobile-screen-button"></i></div>
+                <h3 data-i18n="sfTitle">Short-form Content</h3>
+                <p style="color: var(--text-dim); margin-top: 10px;" data-i18n="sfDesc">Reels i TikTok videi sa titlovima koji "iskaču" i brzim rezovima za maksimalan reach.</p>
+            </div>
+            <div class="glass-card reveal" style="transition-delay: 0.2s;">
+                <div class="icon-box"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
+                <h3 data-i18n="vfxTitle">Motion Graphics</h3>
+                <p style="color: var(--text-dim); margin-top: 10px;" data-i18n="vfxDesc">Animacija teksta, dinamični prelazi i napredni vizuelni efekti rađeni u After Effects-u.</p>
+            </div>
+            <div class="glass-card reveal" style="transition-delay: 0.3s;">
+                <div class="icon-box"><i class="fa-solid fa-palette"></i></div>
+                <h3 data-i18n="colorTitle">Color Grading</h3>
+                <p style="color: var(--text-dim); margin-top: 10px;" data-i18n="colorDesc">Profesionalna obrada boja i korekcija svetla koja vašim snimcima daje premium, filmski izgled.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- PORTFOLIO / INSTAGRAM SEKCIJA -->
+    <section id="portfolio" class="section">
+        <h2 class="section-title reveal" data-i18n="portTitle">Moj <span>Portfolio</span></h2>
+        
+        <div class="glass-card reveal" style="max-width: 650px; margin: 0 auto; padding: 50px 30px; display: flex; flex-direction: column; align-items: center; text-align: center;">
+            <div style="background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-size: 5rem; margin-bottom: 20px;">
+                <i class="fa-brands fa-instagram"></i>
+            </div>
+            
+            <h3 style="font-size: 2rem; margin-bottom: 15px; font-family: 'Space Grotesk', sans-serif;" data-i18n="portSubtitle">Svi moji radovi su na Instagramu</h3>
+            <p style="color: var(--text-dim); margin-bottom: 40px; font-size: 1.15rem; line-height: 1.6;" data-i18n="portDesc">
+                Tamo redovno objavljujem svoje najnovije montaže, "before & after" poređenja i proces rada. Zaprati me i pogledaj šta sve mogu da napravim za tebe!
+            </p>
+            
+            <a href="https://www.instagram.com/vladimir.aep/" target="_blank" class="btn" style="background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); color: white; display: flex; align-items: center; gap: 10px; font-size: 1.1rem; padding: 15px 40px; box-shadow: 0 10px 30px rgba(220, 39, 67, 0.3); border: none; font-weight: 700;">
+                <i class="fa-brands fa-instagram" style="font-size: 1.3rem;"></i> <span data-i18n="portBtn">Otvori Instagram Profil</span>
+            </a>
+        </div>
+    </section>
+
+    <section id="pricing" class="section">
+        <h2 class="section-title reveal" data-i18n="pricingTitle">Paketi <span>Usluga</span></h2>
+        <p class="reveal" style="text-align: center; color: var(--text-dim); margin-top: -30px; margin-bottom: 50px; font-size: 0.95rem;" data-i18n="basePriceInfo">* Osnovna cena za 1 short-form video van paketa iznosi 3.000 RSD.</p>
+        
+        <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));">
+            <!-- Paket 1 -->
+            <div class="glass-card reveal">
+                <h3 data-i18n="pack1Title">Mini Paket</h3>
+                <div class="price"><span id="price1Val" style="color: white; font-size: 2.5rem;">27.000 RSD</span> <span data-i18n="pack1Span">/ 10 videa</span></div>
+                <div style="color: #10b981; font-weight: 700; font-size: 0.85rem; background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.2); display: inline-block; padding: 4px 10px; border-radius: 8px; margin-top: -10px; margin-bottom: 15px;" data-i18n="save10">🔥 UŠTEDA 10%</div>
+                <ul style="list-style: none; color: var(--text-dim); line-height: 2;">
+                    <li><i class="fa-solid fa-check" style="color: var(--accent-primary);"></i> <span data-i18n="pack1F1">Do 60 sekundi po videu</span></li>
+                    <li><i class="fa-solid fa-check" style="color: var(--accent-primary);"></i> <span data-i18n="pack1F2">Brzi rezovi i titlovi</span></li>
+                    <li><i class="fa-solid fa-check" style="color: var(--accent-primary);"></i> <span data-i18n="pack1F3">Jedna revizija po klipu</span></li>
+                </ul>
+                <button onclick="openContactModal()" class="btn btn-primary" style="width: 100%; margin-top: 20px;" data-i18n="btnSelect1">Odaberi Paket</button>
+            </div>
+
+            <!-- Paket 2 (Popular) -->
+            <div class="glass-card reveal" style="border-color: var(--accent-primary); background: rgba(139, 92, 246, 0.05); transform: scale(1.05); z-index: 10;">
+                <div style="position: absolute; top: 15px; right: 15px; background: var(--accent-primary); font-size: 0.7rem; padding: 5px 10px; border-radius: 10px; font-weight: bold;" data-i18n="popularBadge">NAJBOLJA VREDNOST</div>
+                <h3 data-i18n="pack2Title">Maksi Paket</h3>
+                <div class="price"><span id="price2Val" style="color: white; font-size: 2.5rem;">54.000 RSD</span> <span data-i18n="pack2Span">/ 20 videa</span></div>
+                <div style="color: #10b981; font-weight: 700; font-size: 0.85rem; background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.2); display: inline-block; padding: 4px 10px; border-radius: 8px; margin-top: -10px; margin-bottom: 15px;" data-i18n="save10">🔥 UŠTEDA 10%</div>
+                <ul style="list-style: none; color: var(--text-dim); line-height: 2;">
+                    <li><i class="fa-solid fa-check" style="color: var(--accent-primary);"></i> <span data-i18n="pack2F1">Sve iz Mini paketa</span></li>
+                    <li><i class="fa-solid fa-check" style="color: var(--accent-primary);"></i> <span data-i18n="pack2F2">Prioritetna montaža</span></li>
+                    <li><i class="fa-solid fa-check" style="color: var(--accent-primary);"></i> <span data-i18n="pack2F3">Besplatne revizije</span></li>
+                </ul>
+                <button onclick="openContactModal()" class="btn btn-primary" style="width: 100%; margin-top: 20px;" data-i18n="btnSelect2">Odaberi Paket</button>
+            </div>
+
+            <!-- Paket 3 -->
+            <div class="glass-card reveal">
+                <h3 data-i18n="pack3Title">Creator Classic</h3>
+                <div class="price"><span id="price3Val" style="color: white; font-size: 2.5rem;">14.000 RSD</span> <span data-i18n="pack3Span">/ 1 dugi video</span></div>
+                <ul style="list-style: none; color: var(--text-dim); line-height: 2;">
+                    <li><i class="fa-solid fa-check" style="color: var(--accent-primary);"></i> <span data-i18n="pack3F1">YouTube video (10-15 min)</span></li>
+                    <li><i class="fa-solid fa-check" style="color: var(--accent-primary);"></i> <span data-i18n="pack3F2">Napredni efekti i B-roll</span></li>
+                    <li><i class="fa-solid fa-check" style="color: var(--accent-primary);"></i> <span data-i18n="pack3F3">Profesionalan Color Grading</span></li>
+                </ul>
+                <button onclick="openContactModal()" class="btn btn-primary" style="width: 100%; margin-top: 20px;" data-i18n="btnSelect3">Odaberi Paket</button>
+            </div>
+
+            <!-- Paket 4 -->
+            <div class="glass-card reveal">
+                <h3 data-i18n="pack4Title">Creator Mega</h3>
+                <div class="price"><span id="price4Val" style="color: white; font-size: 2.5rem;">40.000 RSD</span> <span data-i18n="pack4Span">/ 3 duga videa</span></div>
+                <div style="color: #10b981; font-weight: 700; font-size: 0.85rem; background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.2); display: inline-block; padding: 4px 10px; border-radius: 8px; margin-top: -10px; margin-bottom: 15px;" data-i18n="saveMega">🔥 UŠTEDA 2.000 RSD</div>
+                <ul style="list-style: none; color: var(--text-dim); line-height: 2;">
+                    <li><i class="fa-solid fa-check" style="color: var(--accent-primary);"></i> <span data-i18n="pack4F1">YouTube videi (10-15 min)</span></li>
+                    <li><i class="fa-solid fa-check" style="color: var(--accent-primary);"></i> <span data-i18n="pack4F2">Sve iz Classic paketa</span></li>
+                    <li><i class="fa-solid fa-check" style="color: var(--accent-primary);"></i> <span data-i18n="pack4F3">Prioritetna izrada</span></li>
+                </ul>
+                <button onclick="openContactModal()" class="btn btn-primary" style="width: 100%; margin-top: 20px;" data-i18n="btnSelect4">Odaberi Paket</button>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Modal (Popup) -->
+    <div id="contactModal" class="modal-overlay">
+        <div class="modal-box">
+            <button class="close-modal" onclick="closeContactModal()"><i class="fa-solid fa-xmark"></i></button>
+            <h3 data-i18n="modalTitle" style="margin-bottom: 10px; font-family: 'Space Grotesk', sans-serif;">Kako želiš da započnemo?</h3>
+            <p style="color: var(--text-dim); font-size: 0.9rem; margin-bottom: 25px;" data-i18n="modalDesc">Izaberi način komunikacije koji ti najviše odgovara.</p>
+            
+            <a href="mailto:vladimirdobrosavljevic2@gmail.com" class="contact-btn email-btn">
+                <i class="fa-solid fa-envelope"></i>
+                <span data-i18n="modalEmail">Pošalji mi Email</span>
+                <small>vladimirdobrosavljevic2@gmail.com</small>
+            </a>
+            
+            <a href="https://www.instagram.com/vladimir.aep/" target="_blank" class="contact-btn insta-btn">
+                <i class="fa-brands fa-instagram"></i>
+                <span data-i18n="modalInsta">Javi se na Instagram</span>
+                <small>@vladimir.aep</small>
+            </a>
+        </div>
+    </div>
+
+    <footer style="padding: 50px 10%; text-align: center; border-top: 1px solid rgba(255,255,255,0.05);">
+        <p data-i18n="footerRights">&copy; 2026 vladimir.aep. Sva prava zadržana.</p>
+    </footer>
+
+    <script>
+        // Scroll Progress Bar
+        window.onscroll = function() {
+            let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            let scrolled = (winScroll / height) * 100;
+            document.getElementById("myBar").style.width = scrolled + "%";
+        };
+
+        // Animacija na scroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // Magični hover
+        document.querySelectorAll('.glass-card').forEach(card => {
+            card.addEventListener('mousemove', e => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                card.style.setProperty('--mouse-x', `${x}px`);
+                card.style.setProperty('--mouse-y', `${y}px`);
+            });
+        });
+
+        // Prevod
+        const translations = {
+            sr: {
+                navServices: "Usluge",
+                navPortfolio: "Portfolio",
+                navPricing: "Cenovnik",
+                heroTitle: "Vaša vizija u <br><span class='gradient-text'>punom pokretu</span>",
+                heroDesc: "Profesionalna video montaža za YouTube, Instagram Reels i komercijalne projekte. Pretvaramo sirove snimke u digitalnu umetnost.",
+                heroBtn: "Započni Projekat",
+                servicesTitle: "Šta radim <span>?</span>",
+                ytTitle: "YouTube Editing",
+                ytDesc: "Dinamičan \"retention\" stil, zvučni efekti i color grading koji zadržavaju gledaoce.",
+                sfTitle: "Short-form Content",
+                sfDesc: "Reels i TikTok videi sa titlovima koji \"iskaču\" i brzim rezovima za maksimalan reach.",
+                vfxTitle: "Motion Graphics",
+                vfxDesc: "Animacija teksta, dinamični prelazi i napredni vizuelni efekti rađeni u After Effects-u.",
+                colorTitle: "Color Grading",
+                colorDesc: "Profesionalna obrada boja i korekcija svetla koja vašim snimcima daje premium, filmski izgled.",
+                portTitle: "Moj <span>Portfolio</span>",
+                portSubtitle: "Svi moji radovi su na Instagramu",
+                portDesc: "Tamo redovno objavljujem svoje najnovije montaže, 'before & after' poređenja i proces rada. Zaprati me i pogledaj šta sve mogu da napravim za tebe!",
+                portBtn: "Otvori Instagram Profil",
+                pricingTitle: "Paketi <span>Usluga</span>",
+                basePriceInfo: "* Osnovna cena za 1 short-form video van paketa iznosi 3.000 RSD.",
+                save10: "🔥 UŠTEDA 10%",
+                saveMega: "🔥 UŠTEDA 2.000 RSD",
+                pack1Title: "Mini Paket",
+                pack1Span: "/ 10 videa",
+                pack1F1: "Do 60 sekundi po videu",
+                pack1F2: "Brzi rezovi i titlovi",
+                pack1F3: "Jedna revizija po klipu",
+                btnSelect1: "Odaberi Paket",
+                popularBadge: "NAJBOLJA VREDNOST",
+                pack2Title: "Maksi Paket",
+                pack2Span: "/ 20 videa",
+                pack2F1: "Sve iz Mini paketa",
+                pack2F2: "Prioritetna montaža",
+                pack2F3: "Besplatne revizije",
+                btnSelect2: "Odaberi Paket",
+                pack3Title: "Creator Classic",
+                pack3Span: "/ 1 dugi video",
+                pack3F1: "YouTube video (10-15 min)",
+                pack3F2: "Napredni efekti i B-roll",
+                pack3F3: "Profesionalan Color Grading",
+                btnSelect3: "Odaberi Paket",
+                pack4Title: "Creator Mega",
+                pack4Span: "/ 3 duga videa",
+                pack4F1: "YouTube videi (10-15 min)",
+                pack4F2: "Sve iz Classic paketa",
+                pack4F3: "Prioritetna izrada",
+                btnSelect4: "Odaberi Paket",
+                footerRights: "&copy; 2026 vladimir.aep. Sva prava zadržana.",
+                modalTitle: "Kako želiš da započnemo?",
+                modalDesc: "Izaberi način komunikacije koji ti najviše odgovara.",
+                modalEmail: "Pošalji mi Email",
+                modalInsta: "Javi se na Instagram"
+            },
+            en: {
+                navServices: "Services",
+                navPortfolio: "Portfolio",
+                navPricing: "Pricing",
+                heroTitle: "Your vision in <br><span class='gradient-text'>full motion</span>",
+                heroDesc: "Professional video editing for YouTube, Instagram Reels, and commercial projects. We turn raw footage into digital art.",
+                heroBtn: "Start Project",
+                servicesTitle: "What I do <span>?</span>",
+                ytTitle: "YouTube Editing",
+                ytDesc: "Dynamic retention style, sound effects, and color grading that keep viewers hooked.",
+                sfTitle: "Short-form Content",
+                sfDesc: "Reels and TikTok videos with pop-up subtitles and fast cuts for maximum reach.",
+                vfxTitle: "Motion Graphics",
+                vfxDesc: "Text animation, dynamic transitions, and advanced visual effects crafted in After Effects.",
+                colorTitle: "Color Grading",
+                colorDesc: "Professional color correction and grading to give your footage a premium, cinematic look.",
+                portTitle: "My <span>Portfolio</span>",
+                portSubtitle: "All my work is on Instagram",
+                portDesc: "I regularly post my latest edits, 'before & after' comparisons, and my workflow. Follow me and check out what I can create for you!",
+                portBtn: "Open Instagram Profile",
+                pricingTitle: "Service <span>Packages</span>",
+                basePriceInfo: "* Base price for 1 short-form video outside of packages is 25 €.",
+                save10: "🔥 SAVE 10%",
+                saveMega: "🔥 SAVE 10 €",
+                pack1Title: "Mini Pack",
+                pack1Span: "/ 10 videos",
+                pack1F1: "Up to 60s per video",
+                pack1F2: "Fast cuts & subtitles",
+                pack1F3: "One revision per clip",
+                btnSelect1: "Select Package",
+                popularBadge: "BEST VALUE",
+                pack2Title: "Maxi Pack",
+                pack2Span: "/ 20 videos",
+                pack2F1: "Everything in Mini pack",
+                pack2F2: "Priority editing",
+                pack2F3: "Free revisions",
+                btnSelect2: "Select Package",
+                pack3Title: "Creator Classic",
+                pack3Span: "/ 1 long video",
+                pack3F1: "YouTube video (10-15m)",
+                pack3F2: "Advanced SFX & B-roll",
+                pack3F3: "Pro Color Grading",
+                btnSelect3: "Select Package",
+                pack4Title: "Creator Mega",
+                pack4Span: "/ 3 long videos",
+                pack4F1: "YouTube videos (10-15m)",
+                pack4F2: "Everything in Classic pack",
+                pack4F3: "Priority delivery",
+                btnSelect4: "Select Package",
+                footerRights: "&copy; 2026 vladimir.aep. All rights reserved.",
+                modalTitle: "How would you like to start?",
+                modalDesc: "Choose the contact method that suits you best.",
+                modalEmail: "Send me an Email",
+                modalInsta: "DM me on Instagram"
+            }
+        };
+
+        const prices = {
+            sr: { p1: "27.000 RSD", p2: "54.000 RSD", p3: "14.000 RSD", p4: "40.000 RSD" },
+            en: { p1: "230 €", p2: "460 €", p3: "120 €", p4: "350 €" }
+        };
+
+        let currentLang = 'sr';
+        const langToggleBtn = document.getElementById('langToggle');
+        const langIcon = document.getElementById('langIcon');
+        const langText = document.getElementById('langText');
+
+        langToggleBtn.addEventListener('click', () => {
+            currentLang = currentLang === 'sr' ? 'en' : 'sr';
+            
+            if (currentLang === 'sr') {
+                langIcon.src = "https://flagcdn.com/w40/us.png";
+                langText.innerText = "EN";
+            } else {
+                langIcon.src = "https://flagcdn.com/w40/rs.png";
+                langText.innerText = "SR";
+            }
+            
+            document.getElementById("price1Val").innerText = prices[currentLang].p1;
+            document.getElementById("price2Val").innerText = prices[currentLang].p2;
+            document.getElementById("price3Val").innerText = prices[currentLang].p3;
+            document.getElementById("price4Val").innerText = prices[currentLang].p4;
+            
+            document.querySelectorAll('[data-i18n]').forEach(element => {
+                const key = element.getAttribute('data-i18n');
+                if (translations[currentLang][key]) {
+                    element.innerHTML = translations[currentLang][key];
+                }
+            });
+        });
+
+        // Modali
+        function openContactModal() {
+            document.getElementById('contactModal').classList.add('active');
+        }
+
+        function closeContactModal() {
+            document.getElementById('contactModal').classList.remove('active');
+        }
+
+        document.getElementById('contactModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeContactModal();
+            }
+        });
+    </script>
+</body>
+</html>
