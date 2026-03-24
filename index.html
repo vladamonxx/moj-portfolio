@@ -188,19 +188,73 @@
             display: inline-block;
             margin-top: 30px;
         }
-        .btn-primary {
-            background: var(--accent-primary);
-            color: white;
-            box-shadow: 0 10px 20px rgba(139, 92, 246, 0.3);
-            border: none;
-            cursor: pointer;
-        }
-        .btn-primary:hover { transform: scale(1.05); background: #7c3aed; }
+       .btn-primary {
+    position: relative;
+    background: linear-gradient(135deg, #8b5cf6, #ec4899);
+    color: white;
+    border: none;
+    cursor: pointer;
+    overflow: hidden;
+    z-index: 1;
+    
+    box-shadow: 0 10px 25px rgba(139, 92, 246, 0.35);
+}
 
-        /* --- SERVICES (KARTICE) --- */
-        .section { padding: 100px 10%; }
-        .section-title { font-family: 'Space Grotesk', sans-serif; font-size: 3rem; margin-bottom: 50px; text-align: center; }
-        .section-title span { color: var(--accent-primary); }
+/* Glow layer */
+.btn-primary::before {
+    content: "";
+    position: absolute;
+    inset: -2px;
+    border-radius: 50px;
+    background: linear-gradient(135deg, #8b5cf6, #ec4899);
+    filter: blur(12px);
+    opacity: 0;
+    transition: 0.4s ease;
+    z-index: -1;
+}
+
+/* Shine effect */
+.btn-primary::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -75%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(
+        120deg,
+        transparent,
+        rgba(255,255,255,0.4),
+        transparent
+    );
+    transform: skewX(-25deg);
+}
+
+/* Hover */
+.btn-primary:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 15px 35px rgba(236, 72, 153, 0.4);
+}
+
+.btn-primary:hover::before {
+    opacity: 1;
+}
+
+/* Shine animacija */
+.btn-primary:hover::after {
+    animation: shine 0.8s ease;
+}
+
+@keyframes shine {
+    100% {
+        left: 125%;
+    }
+}
+
+/* Click feel */
+.btn-primary:active {
+    transform: scale(0.97);
+}
 
         .grid {
             display: grid;
